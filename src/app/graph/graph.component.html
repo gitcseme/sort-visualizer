@@ -1,0 +1,8 @@
+<div class="graph-container" #g_containerRef>
+  <div 
+    *ngFor="let node of nodes;" 
+    class="node" ngClass="{{node}}"
+    (click)="nodeSelected(node)">
+    {{node}}
+  </div>
+</div>

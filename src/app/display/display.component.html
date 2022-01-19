@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <div class="options-container">
+      <div class="option-item" style="margin-top: 5px;">
+        <select class="form-control left-item" [(ngModel)]="selectedAlgorithm">
+          <option value="" disabled>Algorithm</option>
+          <option *ngFor="let algorithm of algorithms" [value]="algorithm">{{ algorithm }}</option>
+        </select>
+      </div>
+      <div class="option-item" style="margin-top: 5px;">
+        <select class="form-control left-item" 
+          [(ngModel)]="operationDelay"
+          (change)="onOperationDelayChange()">
+          <option value="" disabled>Delay</option>
+          <option *ngFor="let time of msTime" [value]="time">{{time}} ms</option>
+        </select>
+      </div>
+      <div class="option-item">
+        <div class="form-check" style="margin-top: 10px;">
+          <input [(ngModel)]="showValue" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Show value
+          </label>
+        </div>
+      </div>
+      <div class="option-item">
+        <button class="btn btn-primary sort-btn left-item" (click)="randomizeData()">Change Data</button>
+      </div>
+      <div class="option-item">
+        <button 
+          class="btn btn-success sort-btn left-item" 
+          (click)="applySort()"
+          [disabled]="selectedAlgorithm == ''">
+          Sort
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="data-container" #d_containerRef>
+      <div 
+        class="item"
+        *ngFor="let box of data" [style]="{ height: box+'px' }">
+        <span *ngIf="showValue" class="amount">{{ box }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+

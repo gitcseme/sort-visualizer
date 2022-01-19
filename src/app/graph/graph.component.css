@@ -1,0 +1,34 @@
+.graph-container {
+  display: flex;
+  width: 600px;
+  height: 600px;
+  border: 1px solid #ccc;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.node {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  background-color: azure;
+  border: 1px solid beige;
+  box-shadow: 0 0 1px rgb(0 0 0 / 50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: blue;
+}
+
+.node:hover {
+  cursor: pointer;
+  background-color: brown;
+  transition: .5s;
+}
+
+.selectedNode {
+  background-color: red;
+  color: aliceblue;
+  font-weight: bold;
+}

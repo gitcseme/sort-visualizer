@@ -1,0 +1,62 @@
+.data-container {
+  display: flex;
+  align-items: flex-end;
+  height: 80vh;
+  justify-content: center;
+}
+
+.data-container .item {
+  width: 40px;
+  background-color: mediumblue;
+  margin: 3px;
+  border: 2px solid beige;
+  border-radius: 5px;
+  box-shadow: 0 0 5px black;
+  position: relative;
+}
+
+.left-content {
+  background-color: aliceblue;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.left-content .left-item {
+  margin: 30px 0;
+}
+
+.workingNode {
+  background-color: green !important;
+  border-color: aqua !important;
+}
+
+.sort-btn {
+  border-radius: 5px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.left-content > h3.steps, h3.swaps {
+  font-family: monospace !important;
+}
+
+span.amount {
+  color: red;
+  position: absolute;
+  top: -30px;
+  width: 100%;
+  text-align: center;
+}
+
+
+/* Top Options */
+
+.options-container {
+  display: flex;
+  justify-content: space-evenly;
+}
