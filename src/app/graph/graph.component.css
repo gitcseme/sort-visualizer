@@ -1,7 +1,8 @@
 .graph-container {
   display: flex;
-  width: 600px;
-  height: 600px;
+  max-width: 900px;
+  min-width: 900px;
+  min-height: 600px;
   border: 1px solid #ccc;
   flex-wrap: wrap;
   align-content: center;
@@ -9,8 +10,8 @@
 }
 
 .node {
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
   border-radius: 5px;
   background-color: azure;
   border: 1px solid beige;
@@ -19,6 +20,7 @@
   justify-content: center;
   align-items: center;
   color: blue;
+  font-size: 7px;
 }
 
 .node:hover {
@@ -31,4 +33,14 @@
   background-color: red;
   color: aliceblue;
   font-weight: bold;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.action-buttons button {
+  margin: 15px 0;
 }

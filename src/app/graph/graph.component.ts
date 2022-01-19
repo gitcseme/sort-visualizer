@@ -7,16 +7,17 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 })
 export class GraphComponent implements OnInit {
   @ViewChild('g_containerRef') containerRef?: ElementRef;
-  dymension: number = 11;
-  row: number = 0;
+  rows: number = 20;
+  cols: number = 34;
+
   grid: number[] = [];
   nodes: string[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
-    for (let i = 0; i < this.dymension; ++i) {
-      for(let j = 0; j < this.dymension; ++j) {
+    for (let i = 0; i < this.rows; ++i) {
+      for(let j = 0; j < this.cols; ++j) {
         this.grid.push(i+j);
         this.nodes.push(`${i}-${j}`);
       }
@@ -26,7 +27,8 @@ export class GraphComponent implements OnInit {
   nodeSelected(node: string): void {
     let container = (this.containerRef?.nativeElement as HTMLDivElement).children;
     let [x, y] = node.split('-').map(v => parseInt(v));
-    let nodeElement = container.item(x*this.dymension + y);
+    let nodeElement = container.item(x*this.cols + y);
+    console.log(nodeElement);
     nodeElement?.classList.add('selectedNode');
   }
 }

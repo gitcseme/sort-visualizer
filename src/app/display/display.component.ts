@@ -13,7 +13,7 @@ export class DisplayComponent implements OnInit {
   showValue: boolean = true;
   algorithms: string[] = ['bubble sort', 'merge sort'];
   selectedAlgorithm: string = this.algorithms[0];
-  msTime: number[] = [20, 50, 100, 500, 1000];
+  msTime: number[] = [10, 20, 50, 100, 500, 1000];
   operationDelay: number = 100;
 
   constructor(private sortAlgoService: SortAlgoService) {}
