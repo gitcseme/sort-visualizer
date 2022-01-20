@@ -29,9 +29,15 @@
   transition: .5s;
 }
 
-.selectedNode {
-  background-color: red;
+.source-node {
+  background-color: blue;
   color: aliceblue;
+  font-weight: bold;
+}
+
+.dest-node {
+  background-color: green;
+  color: black;
   font-weight: bold;
 }
 

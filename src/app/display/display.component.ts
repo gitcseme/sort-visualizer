@@ -35,6 +35,8 @@ export class DisplayComponent implements OnInit {
     })
   }
 
+  // Utility functions.
+
   changeColor(index1: number, index2: number, action: string) {
     let nodes = (this.containerRef?.nativeElement as HTMLDivElement).children;
     if (action == 'add') {
