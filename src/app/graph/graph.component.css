@@ -41,6 +41,17 @@
   font-weight: bold;
 }
 
+.internal {
+  background-color: gold;
+  border: 1px solid red;
+  /* z-index: 1; */
+}
+
+.neighbour {
+  background-color: darkgray;
+  border: 1px solid blue;
+}
+
 .action-buttons {
   display: flex;
   flex-direction: column;
