@@ -44,12 +44,23 @@
 .internal {
   background-color: gold;
   border: 1px solid red;
+  transition: .2s;
   /* z-index: 1; */
 }
 
 .neighbour {
   background-color: darkgray;
   border: 1px solid blue;
+  transition: .5s;
+}
+
+.path-print {
+  background-color: gold !important;
+  border-radius: 50%;
+  color: crimson;
+  border: 1px solid chartreuse;
+  font-weight: bold;
+  transition: .7s;
 }
 
 .action-buttons {

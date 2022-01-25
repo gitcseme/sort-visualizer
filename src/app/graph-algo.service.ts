@@ -10,6 +10,7 @@ export class GraphAlgoService {
   // Meta
   operationDelay: number = 50;
   @Output() visiteNode = new EventEmitter<{node: Node, colorClass: string}>();
+  @Output() tracePathEvent = new EventEmitter<Node>();
 
   // algorithm specific
   dx: number[] = [-1, 0, 1,  0];
@@ -19,7 +20,8 @@ export class GraphAlgoService {
 
   constructor() { }
 
-  async bfs(source: Node, dest: Node, grid: Node[][], rows: number, cols: number) {
+  async bfs(source: Node, dest: Node, grid: Node[][], rows: number, cols: number): Promise<Node | undefined> 
+  {
     this.rows = rows;
     this.cols = cols;
     let q = new Queue<Node>();
@@ -41,17 +43,29 @@ export class GraphAlgoService {
           await this.delayExecution(this.operationDelay);
           
           grid[r][c].visited = true;
+          grid[r][c].parent = u;    // track parent
           q.push(grid[r][c]);
           
           if (dest.x == r && dest.y == c) {
             console.log('found dest: ', r, c);
-            return;
+            return grid[r][c];
           }
         }
       }
       
       this.visiteNode.emit({ node: u, colorClass: 'neighbour'});
     }
+    return undefined;
+  }
+
+  async tracePath(start: Node, end: Node): Promise<void> {
+    let current = start;
+    while ((current.x !== end.x) || (current.y !== end.y)) {
+      this.tracePathEvent.emit(current);
+      await this.delayExecution(this.operationDelay);
+      current = current.parent;
+    }
+    console.log('tracing ends!');
   }
 
   //// Helper Methods //// 

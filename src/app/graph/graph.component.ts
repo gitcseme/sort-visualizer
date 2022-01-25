@@ -25,18 +25,27 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.initGraph();
   }
 
-  search() {
-    if (this.sourceNode != undefined && this.destNode != undefined) {
-      console.log('called');
-      this.graphAlgoService.bfs(this.sourceNode, this.destNode, this.grid, this.rows, this.cols);
+  async search() {
+    this.graphAlgoService.visiteNode.subscribe((event: {node: Node, colorClass: string}) => {
+      this.markVisited(event.node, event.colorClass);
+    });
+
+    this.graphAlgoService.tracePathEvent.subscribe((node: Node) => {
+      this.markVisited(node, 'path-print');
+    })
+
+    if (this.sourceNode !== undefined && this.destNode !== undefined) {
+      console.log('started');
+      let destination = await this.graphAlgoService.bfs(this.sourceNode, this.destNode, this.grid, this.rows, this.cols);
+      console.log('Goal: ', destination);
+      if (destination !== undefined) {
+        await this.graphAlgoService.tracePath(destination.parent, this.sourceNode);
+      }
     }
     else {
       console.log('problems: ', this.sourceNode, this.destNode);
     }
 
-    this.graphAlgoService.visiteNode.subscribe((event: {node: Node, colorClass: string}) => {
-      this.markVisited(event.node, event.colorClass);
-    })
   }
 
   nodeColorClass: string = '';
@@ -78,8 +87,19 @@ export class GraphComponent implements OnInit, AfterViewInit {
     }
   }
 
-  markVisited(node: Node, colorClass: string) {
+  markVisited(node: Node, colorClass: string): void {
+    // do not chnage souece or destination color
+    if ((node.x === this.sourceNode?.x && node.y === this.sourceNode?.y)
+      || (node.x === this.destNode?.x && node.y === this.destNode?.y)) {
+      return;
+    }
+
     let nodeElement = this.container?.item(node.x*this.cols + node.y);
+    if (colorClass === 'path-print') {
+      nodeElement?.classList.add(colorClass);
+      return;
+    }
+
     if (colorClass === 'internal') {
       nodeElement?.classList.replace('neighbour', colorClass);
     }
@@ -95,10 +115,12 @@ export class GraphComponent implements OnInit, AfterViewInit {
 export class Node {
   x: number;
   y: number;
-  visited: boolean
+  visited: boolean;
+  parent: Node;
   constructor(_x: number, _y: number) {
     this.x = _x;
     this.y = _y;
     this.visited = false;
+    this.parent = this;
   }
 }
