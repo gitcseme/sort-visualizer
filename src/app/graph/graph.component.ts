@@ -32,7 +32,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
     this.graphAlgoService.tracePathEvent.subscribe((node: Node) => {
       this.markVisited(node, 'path-print');
-    })
+    });
 
     if (this.sourceNode !== undefined && this.destNode !== undefined) {
       console.log('started');

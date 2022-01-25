@@ -49,7 +49,7 @@
 }
 
 .neighbour {
-  background-color: darkgray;
+  background-color: darkolivegreen;
   border: 1px solid blue;
   transition: .5s;
 }
