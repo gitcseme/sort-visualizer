@@ -1,5 +1,5 @@
 export default class Queue<T> {
-  _storage: T[] = [];
+  private _storage: T[] = [];
 
   push(value: T): void {
     this._storage.push(value);

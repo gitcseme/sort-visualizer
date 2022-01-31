@@ -5,7 +5,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 })
 export class SortAlgoService {
   @Output() metadataChnaged = new EventEmitter<MetaData>();
-  operationDelay: number = 500;
+  operationDelay: number = 100;
 
   constructor() { }
 
@@ -51,12 +51,11 @@ export class SortAlgoService {
     while (L < n1 && R < n2) {
       if (a[L] <= b[R]) {
         data[k++] = a[L++];
-        await this.delayExecution(this.operationDelay);
       }
       else {
         data[k++] = b[R++];
-        await this.delayExecution(this.operationDelay);
       }
+      await this.delayExecution(this.operationDelay);
     }
 
     while (L < n1) data[k++] = a[L++];
@@ -66,7 +65,7 @@ export class SortAlgoService {
 
   //// Helper Methods //// 
   private delayExecution(ms: number) {
-    return new Promise(resolve => setTimeout(() => resolve(1),ms));
+    return new Promise(resolve => setTimeout(() => resolve(1), ms));
   }
 
   private swap(data: number[], a: number, b: number) {

@@ -42,7 +42,7 @@
     <div class="data-container" #d_containerRef>
       <div 
         class="item"
-        *ngFor="let box of data" [style]="{ height: box+'px' }">
+        *ngFor="let box of data" [style]="{ height: box+'vh' }">
         <span *ngIf="showValue" class="amount">{{ box }}</span>
       </div>
     </div>
