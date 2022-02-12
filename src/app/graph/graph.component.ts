@@ -16,9 +16,9 @@ export class GraphComponent implements OnInit, AfterViewInit {
   nodes: string[] = [];
 
   constructor(private graphAlgoService: GraphAlgoService) { }
+
   ngAfterViewInit(): void {
     this.container = (this.containerRef?.nativeElement as HTMLDivElement).children;
-    console.log('div-collections: ', this.container.length);
   }
 
   ngOnInit(): void {
@@ -35,11 +35,10 @@ export class GraphComponent implements OnInit, AfterViewInit {
     });
 
     if (this.sourceNode !== undefined && this.destNode !== undefined) {
-      console.log('started');
       let destination = await this.graphAlgoService.bfs(this.sourceNode, this.destNode, this.grid, this.rows, this.cols);
-      console.log('Goal: ', destination);
       if (destination !== undefined) {
         await this.graphAlgoService.tracePath(destination.parent, this.sourceNode);
+        this.resetNodes();
       }
     }
     else {
@@ -53,6 +52,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
   sourceNode: Node | undefined;
   destNode: Node | undefined;
 
+  // methods triggering form the html
   initSource(): void {
     this.nodeIndicator = 1;
     this.nodeColorClass = 'source-node';
@@ -60,6 +60,14 @@ export class GraphComponent implements OnInit, AfterViewInit {
   initDestination(): void {
     this.nodeIndicator = 2;
     this.nodeColorClass = 'dest-node';
+  }
+  readyToSort(): boolean {
+    return !(this.sourceNode !== undefined && this.destNode !== undefined);
+  }
+  resetNodes(): void {
+    this.nodeIndicator = 0;
+    this.sourceNode = undefined;
+    this.destNode = undefined;
   }
 
   updateNode(node: string): void {
@@ -77,6 +85,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // Prepare graph
   initGraph() {
     for (let i = 0; i < this.rows; ++i) {
       this.grid[i] = new Array<Node>(this.cols);
