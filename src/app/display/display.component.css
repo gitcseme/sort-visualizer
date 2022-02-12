@@ -33,14 +33,6 @@
   border-color: aqua !important;
 }
 
-.sort-btn {
-  border-radius: 5px;
-  padding-left: 30px;
-  padding-right: 30px;
-  margin-top: 5px;
-  cursor: pointer;
-}
-
 .left-content > h3.steps, h3.swaps {
   font-family: monospace !important;
 }
@@ -58,5 +50,17 @@ span.amount {
 
 .options-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
+}
+
+.options-container .option-item {
+  margin: 0 5px;
+}
+
+.sort-btn {
+  border-radius: 5px;
+  margin-top: 5px;
+  cursor: pointer;
+  padding: 4px 38px;
+  border: 2px solid chartreuse;
 }
