@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GraphAlgoService } from '../graph-algo.service';
+import { distinctUntilChanged, distinctUntilKeyChanged, fromEvent, map, Observable, Subscription, switchMap, takeUntil, throttleTime } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-graph',
@@ -11,14 +13,54 @@ export class GraphComponent implements OnInit, AfterViewInit {
   container: HTMLCollection | undefined;
   rows: number = 20;
   cols: number = 34;
+  showGridValue: boolean = true;
 
   grid: Node[][] = [];
   nodes: string[] = [];
 
-  constructor(private graphAlgoService: GraphAlgoService) { }
+  constructor(private graphAlgoService: GraphAlgoService, private router: Router) { }
+
+  // MOUSE EVENTS
+  mouseHoldSubscription: Subscription | undefined;
+  mousedown: Observable<Event>| undefined;
+  mousemove: Observable<Event>| undefined;
+  mouseup: Observable<Event>| undefined;
+  mouseHold$: Observable<Event>| undefined;
 
   ngAfterViewInit(): void {
     this.container = (this.containerRef?.nativeElement as HTMLDivElement).children;
+    
+    this.mousedown = fromEvent(this.containerRef?.nativeElement, 'mousedown');
+    this.mousemove = fromEvent(this.containerRef?.nativeElement, 'mousemove');
+    this.mouseup = fromEvent(this.containerRef?.nativeElement, 'mouseup');
+    
+    this.registerHold();
+    this.mouseup.subscribe(event => this.registerHold());    
+  }
+
+  registerHold() {
+    this.mouseHoldSubscription?.unsubscribe();
+    this.mouseHold$ = this.mousedown!
+    .pipe(
+      switchMap(event => this.mousemove!),
+      throttleTime(10),
+      distinctUntilChanged((prev, curr) => {
+        return (prev.target as HTMLElement).id === (curr.target as HTMLElement).id;
+      }),
+      takeUntil(this.mouseup!)
+    );
+
+    this.mouseHoldSubscription = this.mouseHold$?.subscribe(event => {
+      let cord: string = (event.target as HTMLElement).id;
+      console.log('event: ', cord);
+      if (Boolean(cord)) {
+        let [x, y] = cord.split('-').map(num => parseInt(num));
+        let nodeElement = this.container?.item(x*this.cols + y);
+        if (!nodeElement?.classList.contains('block_path')) {
+          nodeElement?.classList.add('block_path');
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -68,6 +110,11 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.nodeIndicator = 0;
     this.sourceNode = undefined;
     this.destNode = undefined;
+  }
+  reload() {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['graph']);
+    }); 
   }
 
   updateNode(node: string): void {
@@ -119,6 +166,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
       nodeElement?.classList.add(colorClass);
     }
   }
+
 }
 
 export class Node {

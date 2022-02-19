@@ -17,9 +17,9 @@ export class SortAlgoService {
         if (data[j] < data[j-1]) {
           this.metadataChnaged.emit({ index1: j-1, index2: j, action: 'add' });
           await this.delayExecution(this.operationDelay);
-          this.swap(data, j-1, j);
+          await this.swap(data, j-1, j);
           await this.delayExecution(this.operationDelay);
-          this.metadataChnaged.emit({ index1: j, index2: j-1, action: 'remove' });
+          this.metadataChnaged.emit({ index1: j-1, index2: j, action: 'remove' });
         }
       }
     }
@@ -68,7 +68,7 @@ export class SortAlgoService {
     return new Promise(resolve => setTimeout(() => resolve(1), ms));
   }
 
-  private swap(data: number[], a: number, b: number) {
+  private async swap(data: number[], a: number, b: number): Promise<void> {
     let temp = data[a];
     data[a] = data[b];
     data[b] = temp;

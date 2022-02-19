@@ -72,3 +72,12 @@
 .action-buttons button {
   margin: 15px 0;
 }
+
+.block_path {
+  background-color: black;
+  border: 1px solid crimson;
+  border-radius: 50%;
+  color: yellow;
+  font-weight: bold;
+  transition: .7s;
+}

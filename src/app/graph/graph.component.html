@@ -3,13 +3,23 @@
     <button (click)="initSource()" class="btn btn-primary">source</button>
     <button (click)="initDestination()" class="btn btn-outline-success">destination</button>
     <button (click)="search()" [disabled]="readyToSort()" class="btn btn-success">search</button>
+    
+    <div class="form-check" style="margin-top: 10px;">
+      <input [(ngModel)]="showGridValue" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Show value
+      </label>
+    </div>
+    <button (click)="reload()" class="btn btn-outline-warning">reset</button>
+
   </div>
   <div class="col graph-container" #g_containerRef>
     <div 
       *ngFor="let node of nodes" 
       class="node" 
+      [id]="node"
       (click)="updateNode(node)">
-      {{node}}
+      <span *ngIf="showGridValue">{{node}}</span>
     </div>
   </div>
 </div>
