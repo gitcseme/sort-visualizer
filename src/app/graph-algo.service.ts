@@ -11,6 +11,7 @@ export class GraphAlgoService {
   operationDelay: number = 50;
   @Output() visiteNode = new EventEmitter<{node: Node, colorClass: string}>();
   @Output() tracePathEvent = new EventEmitter<Node>();
+  container: HTMLCollection | undefined;
 
   // algorithm specific
   dx: number[] = [-1, 0, 1,  0];
@@ -20,17 +21,17 @@ export class GraphAlgoService {
 
   constructor() { }
 
-  async bfs(source: Node, dest: Node, grid: Node[][], rows: number, cols: number): Promise<Node | undefined> 
+  async bfs(source: Node, dest: Node, grid: Node[][]): Promise<Node | undefined> 
   {
-    this.rows = rows;
-    this.cols = cols;
-    let q = new Queue<Node>();
+    this.rows = grid.length;
+    this.cols = grid[0].length;
+    let queue = new Queue<Node>();
     source.visited = true;
-    q.push(source);
+    queue.push(source);
     await this.delayExecution(this.operationDelay);
     
-    while(!q.empty()) {
-      let u = q.pop()!;
+    while(!queue.empty()) {
+      let u = queue.pop()!;
       this.visiteNode.emit({ node: u, colorClass: 'internal'});
       await this.delayExecution(this.operationDelay);
 
@@ -44,7 +45,7 @@ export class GraphAlgoService {
           
           grid[r][c].visited = true;
           grid[r][c].parent = u;    // track parent
-          q.push(grid[r][c]);
+          queue.push(grid[r][c]);
           
           if (dest.x == r && dest.y == c) {
             console.log('found dest: ', r, c);
@@ -75,7 +76,9 @@ export class GraphAlgoService {
 
   private isSafe(r: number, c: number): boolean {
     if (r >= 0 && r < this.rows && c >= 0 && c < this.cols) {
-      return true;
+      let node = this.container?.item(r*this.cols + c);
+      if (!node?.classList.contains('block_path'))
+        return true;
     }
     return false;
   }

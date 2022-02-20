@@ -3,10 +3,11 @@
   max-width: 900px;
   min-width: 900px;
   min-height: 600px;
-  border: 1px solid #ccc;
+  border: 1px solid coral;
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
+  background-color: white;
 }
 
 .node {
@@ -14,13 +15,14 @@
   height: 25px;
   border-radius: 5px;
   background-color: azure;
-  border: 1px solid beige;
+  border: 1px solid gray;
   box-shadow: 0 0 1px rgb(0 0 0 / 50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: blue;
+  color: darkmagenta;
   font-size: 7px;
+  font-weight: 700;
 }
 
 .node:hover {
@@ -49,8 +51,8 @@
 }
 
 .neighbour {
-  background-color: darkolivegreen;
-  border: 1px solid blue;
+  background-color: darkcyan;
+  border: 1px solid chartreuse;
   transition: .5s;
 }
 
@@ -67,10 +69,15 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: flex-end;
 }
 
 .action-buttons button {
   margin: 15px 0;
+}
+
+.col-md-2.action-buttons > .left-side {
+  width: 150px;
 }
 
 .block_path {

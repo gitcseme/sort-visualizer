@@ -1,16 +1,24 @@
 <div class="row">
   <div class="col-md-2 action-buttons">
-    <button (click)="initSource()" class="btn btn-primary">source</button>
-    <button (click)="initDestination()" class="btn btn-outline-success">destination</button>
-    <button (click)="search()" [disabled]="readyToSort()" class="btn btn-success">search</button>
+    <button (click)="initSource()" class="btn btn-primary left-side">Source</button>
+    <button (click)="initDestination()" class="btn btn-outline-success left-side">Destination</button>
+    <button (click)="search()" [disabled]="readyToSort()" class="btn btn-success left-side">Search</button>
     
-    <div class="form-check" style="margin-top: 10px;">
+    <div class="form-check left-side" style="margin-top: 10px;">
       <input [(ngModel)]="showGridValue" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
       <label class="form-check-label" for="flexCheckDefault">
         Show value
       </label>
     </div>
-    <button (click)="reload()" class="btn btn-outline-warning">reset</button>
+    <div class="option-item left-side" style="margin-top: 5px;">
+      <select class="form-control left-item" 
+        [(ngModel)]="operationDelay"
+        (change)="onOperationDelayChange()">
+        <option value="" disabled>Delay</option>
+        <option *ngFor="let time of msTime" [value]="time">{{time}} ms</option>
+      </select>
+    </div>
+    <button (click)="reload()" class="btn btn-outline-warning left-side">Reset</button>
 
   </div>
   <div class="col graph-container" #g_containerRef>

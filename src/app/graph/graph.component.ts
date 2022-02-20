@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GraphAlgoService } from '../graph-algo.service';
-import { distinctUntilChanged, distinctUntilKeyChanged, fromEvent, map, Observable, Subscription, switchMap, takeUntil, throttleTime } from 'rxjs';
+import { distinctUntilChanged, fromEvent, Observable, Subscription, switchMap, takeUntil, throttleTime } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,6 +14,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
   rows: number = 20;
   cols: number = 34;
   showGridValue: boolean = true;
+  operationDelay: number = 50;
+  msTime: number[] = [20, 50, 100, 200, 500];
 
   grid: Node[][] = [];
   nodes: string[] = [];
@@ -21,14 +23,15 @@ export class GraphComponent implements OnInit, AfterViewInit {
   constructor(private graphAlgoService: GraphAlgoService, private router: Router) { }
 
   // MOUSE EVENTS
-  mouseHoldSubscription: Subscription | undefined;
   mousedown: Observable<Event>| undefined;
   mousemove: Observable<Event>| undefined;
   mouseup: Observable<Event>| undefined;
   mouseHold$: Observable<Event>| undefined;
+  mouseHoldSubscription: Subscription | undefined;
 
   ngAfterViewInit(): void {
     this.container = (this.containerRef?.nativeElement as HTMLDivElement).children;
+    this.graphAlgoService.container = this.container;
     
     this.mousedown = fromEvent(this.containerRef?.nativeElement, 'mousedown');
     this.mousemove = fromEvent(this.containerRef?.nativeElement, 'mousemove');
@@ -77,7 +80,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
     });
 
     if (this.sourceNode !== undefined && this.destNode !== undefined) {
-      let destination = await this.graphAlgoService.bfs(this.sourceNode, this.destNode, this.grid, this.rows, this.cols);
+      let destination = await this.graphAlgoService.bfs(this.sourceNode, this.destNode, this.grid);
       if (destination !== undefined) {
         await this.graphAlgoService.tracePath(destination.parent, this.sourceNode);
         this.resetNodes();
@@ -115,6 +118,9 @@ export class GraphComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['graph']);
     }); 
+  }
+  onOperationDelayChange() {
+    this.graphAlgoService.operationDelay = this.operationDelay;
   }
 
   updateNode(node: string): void {
