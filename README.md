@@ -3,4 +3,5 @@
 * merge sort
 
 # Graph vidualizer
-* working on it
+* BFS is applied as traversing algorithm
+* Used rxjs for complex event handling
