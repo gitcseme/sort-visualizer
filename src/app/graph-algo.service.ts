@@ -18,13 +18,22 @@ export class GraphAlgoService {
   dy: number[] = [ 0, 1, 0, -1];
   rows: number = 0;
   cols: number = 0;
+  source: Node | undefined;
+  dest: Node | undefined;
+  grid: Node[][] = [];
+
+  loadPrerequisites(grid: Node[][], container: HTMLCollection): void {
+    this.grid = grid;
+    this.rows = grid.length;
+    this.cols = grid[0].length; 
+    this.container = container;
+  }
 
   constructor() { }
 
-  async bfs(source: Node, dest: Node, grid: Node[][]): Promise<Node | undefined> 
+  // BFS
+  async bfs(source: Node, dest: Node): Promise<Node | undefined> 
   {
-    this.rows = grid.length;
-    this.cols = grid[0].length;
     let queue = new Queue<Node>();
     source.visited = true;
     queue.push(source);
@@ -39,17 +48,17 @@ export class GraphAlgoService {
         let r = u.x + this.dx[i];
         let c = u.y + this.dy[i];
 
-        if (this.isSafe(r, c) && !grid[r][c].visited) {
-          this.visiteNode.emit({ node: grid[r][c], colorClass: 'neighbour'});
+        if (this.isSafe(r, c) && !this.grid[r][c].visited) {
+          this.visiteNode.emit({ node: this.grid[r][c], colorClass: 'neighbour'});
           await this.delayExecution(this.operationDelay);
           
-          grid[r][c].visited = true;
-          grid[r][c].parent = u;    // track parent
-          queue.push(grid[r][c]);
+          this.grid[r][c].visited = true;
+          this.grid[r][c].parent = u;    // track parent
+          queue.push(this.grid[r][c]);
           
           if (dest.x == r && dest.y == c) {
             console.log('found dest: ', r, c);
-            return grid[r][c];
+            return this.grid[r][c];
           }
         }
       }
@@ -58,6 +67,12 @@ export class GraphAlgoService {
     }
     return undefined;
   }
+
+  // DFS
+  // async dfs(source: Node, dest: Node, grid: Node[][]): Promise<Node | undefined>  
+  // {
+
+  // }
 
   async tracePath(start: Node, end: Node): Promise<void> {
     let current = start;

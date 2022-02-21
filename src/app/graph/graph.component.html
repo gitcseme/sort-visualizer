@@ -2,6 +2,12 @@
   <div class="col-md-2 action-buttons">
     <button (click)="initSource()" class="btn btn-primary left-side">Source</button>
     <button (click)="initDestination()" class="btn btn-outline-success left-side">Destination</button>
+    <div class="option-item left-side" style="margin-top: 5px;">
+      <select class="form-control left-item" [(ngModel)]="selectedAlgorithm">
+        <option value="" disabled>Algorithm</option>
+        <option *ngFor="let algorithm of algorithms" [value]="algorithm">{{ algorithm }}</option>
+      </select>
+    </div>
     <button (click)="search()" [disabled]="readyToSort()" class="btn btn-success left-side">Search</button>
     
     <div class="form-check left-side" style="margin-top: 10px;">

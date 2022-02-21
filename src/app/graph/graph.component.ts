@@ -17,6 +17,9 @@ export class GraphComponent implements OnInit, AfterViewInit {
   operationDelay: number = 50;
   msTime: number[] = [20, 50, 100, 200, 500];
 
+  algorithms: string[] = ['BFS', 'DFS'];
+  selectedAlgorithm: string = this.algorithms[0];
+
   grid: Node[][] = [];
   nodes: string[] = [];
 
@@ -31,7 +34,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.container = (this.containerRef?.nativeElement as HTMLDivElement).children;
-    this.graphAlgoService.container = this.container;
+    this.graphAlgoService.loadPrerequisites(this.grid, this.container);
     
     this.mousedown = fromEvent(this.containerRef?.nativeElement, 'mousedown');
     this.mousemove = fromEvent(this.containerRef?.nativeElement, 'mousemove');
@@ -80,7 +83,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
     });
 
     if (this.sourceNode !== undefined && this.destNode !== undefined) {
-      let destination = await this.graphAlgoService.bfs(this.sourceNode, this.destNode, this.grid);
+      let destination = await this.graphAlgoService.bfs(this.sourceNode, this.destNode);
       if (destination !== undefined) {
         await this.graphAlgoService.tracePath(destination.parent, this.sourceNode);
         this.resetNodes();
