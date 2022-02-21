@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import Queue from 'src/ds/CustomDS';
+import { Queue, Stack } from 'src/ds/CustomDS';
 
 import { Node } from "./graph/graph.component";
 
@@ -69,10 +69,41 @@ export class GraphAlgoService {
   }
 
   // DFS
-  // async dfs(source: Node, dest: Node, grid: Node[][]): Promise<Node | undefined>  
-  // {
+  async dfs(source: Node, dest: Node): Promise<Node | undefined>  
+  {
+    let stack = new Stack<Node>();
+    stack.push(source);
+    
+    while (!stack.empty()) {
+      let u = stack.pop()!;
+      u.visited = true;
+      this.visiteNode.emit({ node: u, colorClass: 'internal'});
+      await this.delayExecution(this.operationDelay);
 
-  // }
+      for (let i = 0; i < 4; ++i) {
+        let r = u.x + this.dx[i];
+        let c = u.y + this.dy[i];
+
+        if (this.isSafe(r, c) && !this.grid[r][c].visited) {
+          this.visiteNode.emit({ node: this.grid[r][c], colorClass: 'neighbour'});
+          await this.delayExecution(this.operationDelay);
+          
+          this.grid[r][c].visited = true;
+          this.grid[r][c].parent = u;    // track parent
+          stack.push(this.grid[r][c]);
+
+          if (dest.x == r && dest.y == c) {
+            console.log('found dest: ', r, c);
+            return this.grid[r][c];
+          }
+        }
+      }
+      console.log('running...', u.x, u.y);
+
+      this.visiteNode.emit({ node: u, colorClass: 'neighbour'});
+    }
+    return undefined;
+  }
 
   async tracePath(start: Node, end: Node): Promise<void> {
     let current = start;

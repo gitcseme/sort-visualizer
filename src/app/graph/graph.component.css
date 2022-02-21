@@ -46,14 +46,14 @@
 .internal {
   background-color: gold;
   border: 1px solid red;
-  transition: .2s;
+  transition: .02s; 
   /* z-index: 1; */
 }
 
 .neighbour {
   background-color: darkcyan;
   border: 1px solid chartreuse;
-  transition: .5s;
+  transition: 1s;
 }
 
 .path-print {

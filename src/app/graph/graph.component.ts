@@ -14,8 +14,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
   rows: number = 20;
   cols: number = 34;
   showGridValue: boolean = true;
-  operationDelay: number = 50;
-  msTime: number[] = [20, 50, 100, 200, 500];
+  operationDelay: number = 20;
+  msTime: number[] = [1, 5, 20, 100, 200, 500];
 
   algorithms: string[] = ['BFS', 'DFS'];
   selectedAlgorithm: string = this.algorithms[0];
@@ -83,11 +83,21 @@ export class GraphComponent implements OnInit, AfterViewInit {
     });
 
     if (this.sourceNode !== undefined && this.destNode !== undefined) {
-      let destination = await this.graphAlgoService.bfs(this.sourceNode, this.destNode);
+      let destination: Node | undefined;
+      if (this.selectedAlgorithm === 'BFS') {
+        destination = await this.graphAlgoService.bfs(this.sourceNode, this.destNode);
+      }
+      else {
+        destination = await this.graphAlgoService.dfs(this.sourceNode, this.destNode);
+      }
+
       if (destination !== undefined) {
         await this.graphAlgoService.tracePath(destination.parent, this.sourceNode);
-        this.resetNodes();
       }
+      else {
+        console.log('destination cannot be found!!');  
+      }
+      this.resetNodes();
     }
     else {
       console.log('problems: ', this.sourceNode, this.destNode);
