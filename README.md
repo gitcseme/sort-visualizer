@@ -1,10 +1,10 @@
 Its a practice project for learning **angular**. Have a look at the .gif file attached below to get a quick demo
 
-# Sort vidualizer
+# Sort visualizer
 * **Bubble sort**
 * **Merge sort**
 
-# Graph vidualizer
+# Graph visualizer
 * **BFS**
 * **DFS**
 * **Used rxjs for complex event handling**.
