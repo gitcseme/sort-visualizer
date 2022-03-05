@@ -3,9 +3,10 @@
 * **Merge sort**
 
 # Graph vidualizer
-* **BFS** is applied as traversing algorithm.
-* **DFS** also introduced with stack implementation.
+* **BFS**
+* **DFS**
 * **Used rxjs for complex event handling**.
+* Added forbidden cell which is not accessible while traversing.
 
 ## BFS
 <p align="center">
