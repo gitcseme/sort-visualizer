@@ -1,8 +1,28 @@
 # SortVidualizer
-* bubble sort
-* merge sort
+* **Bubble sort**
+* **Merge sort**
 
 # Graph vidualizer
-* BFS is applied as traversing algorithm.
-* DFS also introduced with stack implementation.
-* Used rxjs for complex event handling.
+* **BFS** is applied as traversing algorithm.
+* **DFS** also introduced with stack implementation.
+* **Used rxjs for complex event handling**.
+
+## BFS
+<p align="center">
+  <img src="./Gifs/BFS.gif" alt="bfs">
+</p>
+
+## DFS
+<p align="center">
+  <img src="./Gifs/DFS.gif" alt="dfs">
+</p>
+
+## Merge sort
+<p align="center">
+  <img src="./Gifs/merge-sort.gif" alt="merge sort">
+</p>
+
+## Bubble sort
+<p align="center">
+  <img src="./Gifs/bubble-sort.gif" alt="bubble sort">
+</p>
