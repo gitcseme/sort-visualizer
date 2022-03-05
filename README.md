@@ -1,4 +1,6 @@
-# SortVidualizer
+Its a practice project for learning **angular**. Have a look at the .gif file attached below to get a quick demo
+
+# Sort vidualizer
 * **Bubble sort**
 * **Merge sort**
 
