@@ -48,4 +48,12 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col">
+    <div class="data-indicator">
+      <div *ngFor="let i of indicators" class="item" [ngClass]="{ showIndicator: i }">
+      </div>
+    </div>
+  </div>
+</div>
 

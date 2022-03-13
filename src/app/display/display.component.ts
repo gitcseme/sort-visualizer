@@ -11,6 +11,8 @@ export class DisplayComponent implements OnInit, AfterViewInit {
   container: HTMLCollection | undefined;
 
   data: number[] = [];
+  arrayLength: number = 50;
+  indicators: boolean[] = [];
   showValue: boolean = true;
   operationDelay: number = 100;
   algorithms: string[] = ['bubble sort', 'merge sort'];
@@ -24,11 +26,17 @@ export class DisplayComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.randomizeData();
+    this.indicators = new Array(this.arrayLength).fill(false);
   }
 
   async applySort() {
     this.sortAlgoService.metadataChnaged.subscribe((mdata: MetaData) => {
       this.changeColor(mdata.index1, mdata.index2, mdata.action);
+    });
+
+    this.sortAlgoService.workingSubArray.subscribe((subArray: {left: number, right: number}) => {
+      this.indicators = new Array(this.arrayLength).fill(false);
+      this.indicators.fill(true, subArray.left, subArray.right+1);
     });
 
     if (this.selectedAlgorithm == 'bubble sort') {
@@ -59,8 +67,8 @@ export class DisplayComponent implements OnInit, AfterViewInit {
 
   randomizeData(): void {
     this.data = [];
-    for (let i = 0; i < 50; ++i) {
-      let num = this.getRandomInt(1, 75);
+    for (let i = 0; i < this.arrayLength; ++i) {
+      let num = this.getRandomInt(1, 70);
       this.data.push(num);
     }
   }

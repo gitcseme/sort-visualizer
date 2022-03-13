@@ -5,6 +5,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 })
 export class SortAlgoService {
   @Output() metadataChnaged = new EventEmitter<MetaData>();
+  @Output() workingSubArray = new EventEmitter<{left:number, right: number}>();
   operationDelay: number = 100;
 
   constructor() { }
@@ -39,6 +40,8 @@ export class SortAlgoService {
   }
 
   private async merge(data: number[], i: number, mid: number, j: number) { 
+    this.workingSubArray.emit({left: i, right: j});
+
     let n1: number = mid - i + 1;
     let n2: number = j - mid;
 
