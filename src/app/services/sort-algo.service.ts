@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { MetaData } from '../shared/MetaData';
 
 @Injectable({
   providedIn: 'root'
@@ -78,8 +79,3 @@ export class SortAlgoService {
   }
 }
 
-export interface MetaData {
-  index1: number;
-  index2: number;
-  action: string;
-}

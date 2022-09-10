@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { SortAlgoService, MetaData } from '../sort-algo.service';
+import { SortAlgoService } from '../services/sort-algo.service';
+import { MetaData } from "../shared/MetaData";
 
 @Component({
   selector: 'app-display',

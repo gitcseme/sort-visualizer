@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Queue, Stack } from 'src/ds/CustomDS';
+import { Queue, Stack } from 'src/app/shared/CustomDataStructures';
 
-import { Node } from "./graph/graph.component";
+import { Node } from "../shared/node";
 
 @Injectable({
   providedIn: 'root'
